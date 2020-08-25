@@ -34,14 +34,7 @@ module String_H
 		return(res);
 	end;
 
-	def str(input)
-		if(input.class==nil.class); then
-			out="null";
-		else
-			out=sprintf("%s",input);
-		end;
-		return(out);
-	end;
+	
 
 	def toUpper(string)
 		return(str(string).upcase);
@@ -165,42 +158,7 @@ module String_H
 		return(out);
 	end;
 	
-	def isString(obj);
-		 return(typeOf(obj)=="string");
-	end;
-
-	def isInteger(obj);
-		 return(typeOf(obj)=="integer");
-	end;
-
-	def isFloat(obj);
-		 return(typeOf(obj)=="float");
-	end;
-
-	def isNumeric(obj);
-		 return(isFloat(obj) or isInteger(obj));
-	end;
-
-	def isList(obj);
-		return(typeOf(obj)=="list");
-	end;
-
-	def isDict(obj);
-		return(typeOf(obj)=="dict");
-	end;
-
-	def isIn(what,where);
-		return(where.include?(what));
-	end;
-
-
-	def typeOf(input);
-		out=toLower(input.class);
-		if(isIn(out,CORRECT_TYPES)) then
-			out=CORRECT_TYPES[out];
-		end;
-		return(sprintf("%s",out));
-	end;
+	
 
 
 	def tr(string,characters,replacements);
@@ -232,10 +190,6 @@ module String_H
 	end;
 
 				
-	def len(input);
-		return(input.length);
-	end;
-
 
 	
 	def instr(*vargs);
@@ -260,23 +214,6 @@ module String_H
 			out=fromChar+ins.index(needle);
 		end;
 		return(out);
-	end;
-
-	def popLast(*input);
-		return(input.pop(1));
-	end;
-	
-	def pushLast(where,what);
-		where.append(what);
-		return(where.length);
-	end;
-	def popFirst(input,num=1);
-		return(input.shift(num));
-	end;
-	
-	def pushFirst(where,what);
-		where.unshift(what);
-		return(where.length);
 	end;
 	
 		

@@ -33,7 +33,6 @@ def array(*args, **kwargs):
         res.append(a);
     return(res);
 
-#str is native
 
 def toUpper(string):
     a="";
@@ -167,37 +166,6 @@ def substr(string, start, nChars = null):
         else:
             out=string[start:nChars];
         return(out);
-    
-def isString(obj):
-    return(type(obj)==type(""));
-
-def isInteger(obj):
-    return(type(obj)==type(1));
-
-
-def isFloat(obj):
-    return(type(obj)==type(1.0));
-
-def isNumeric(obj):
-    return(isFloat(obj) or isInteger(obj));
-
-def isList(obj):
-    return(type(obj)==type({}));
-
-def isDict(obj):
-    return(type(obj)==type({}));
-
-def isIn(what,where):
-	return(what in where);
-	
-
-def typeOf(input):
-	cl=str(type(input));
-	out=toLower(cl.split("'")[1]);
-	
-	if(isIn(out,CORRECT_TYPES)):
-		out=CORRECT_TYPES[out];
-	return(out);
 
 def tr(string,characters,replacements):
 	tmp=str(string);
@@ -224,23 +192,6 @@ def rev(string):
 	return(o);
 
 #len native
-
-def popLast(inp):
-	return(inp.pop(-1));
-		
-def pushLast(where,what):
-	where.append(what);
-	return(where.length);
-
-def popFirst(inp,num=1):
-	out=[];
-	for f in range(0,num):
-		out.append(inp.pop(0));
-	return(out);
-	
-def pushFirst(where,what):
-	where.insert(0,what);
-	return(where.length);
 		
 def strtok(string,delimiter=" "):
 	return(split(delimiter,string));

@@ -4,39 +4,74 @@ try:
 	ALIAS_H;
 except NameError:
 	from alias_h import * ;
+try:
+	STRING_H;
+except NameError:
+	from string_h import * ;
+
 MATH_H=TRUE;
 
 import math;
 from sys import version;
 #from math import sin, cos,sqrt;
 
-PI=pi=3.1415927;
-e=E=  2.7182818;
-infinite=math.inf;
+PI=pi=PI=3.141592653589793;	#(2**0.5)*2.221441469079;#3.1415926535895347
+e=2.718281828459045; 		#((pi**4)+(pi**5))**(1/6);#2.7182818086117377
+
+infinite=None;#math.inf;
 
 
-def arad(ang):
+def toRad(ang):
 	"""
 	Math Function
 	-------------
 	
 	Converts degrees into radians.
 	
-	arad(180) 
+	toRad(180) 
 			returns 3.1415927 (PI)
 	"""
 	return(ang*pi/180.0);
-def adeg(ang):
+def toDeg(ang):
 	"""
 	Math Function
 	-------------
 	
 	Converts radians into degrees.
 	
-	adeg(pi) 
+	toDeg(pi) 
 			returns 180 (degrees)
 	"""
 	return(ang*180.0/pi);
+	
+def toFloat(inp):
+	"""
+	Convert first ocurrency of numeric value 
+	into a floating point number
+	
+	toFloat(" la casa roja 3.2 180 ")
+			
+			ANS: 3.2
+	"""
+	out=0.0;
+	x=sprintf("%s",inp).strip();
+	for f in x.split():
+		try:
+			tmp=(type(float(f))==type(1.1));
+			
+		except:
+			tmp=false;
+		
+		if (tmp):
+			out=float(f);
+			break;
+	return(out);
+
+def toInt(inp):
+	return(int(toFloat(inp)));
+	
+#round native
+
 
 def sin(ang):
 	"""
@@ -48,7 +83,7 @@ def sin(ang):
 	sin(90)
 			returns 1
 	"""
-	return(round(math.sin(arad(ang)),8));
+	return(math.sin(toRad(ang)));#(round(math.sin(toRad(ang)),8));
 
 def sinh(ang):
 	"""
@@ -60,7 +95,8 @@ def sinh(ang):
 	sinh(90)
 			returns 2.30129896
 	"""
-	return(round(math.sinh(arad(ang)),8));
+	return (math.sinh(toRad(ang))); #(round(math.sinh(toRad(ang)),8));
+	
 def asin(val):
 	"""
 	Math Function
@@ -71,7 +107,7 @@ def asin(val):
 	asin(1)
 			returns 90
 	"""
-	return(adeg(math.asin(val)));
+	return(toDeg(math.asin(val)));
 
 def asinh(val):
 	"""
@@ -83,7 +119,7 @@ def asinh(val):
 	asinh(2.301298960533041)
 			returns 90
 	"""
-	return(round(adeg(math.asinh(val)),7));
+	return(toDeg(math.asinh(val)));
 
 def cos(ang):
 	"""
@@ -95,7 +131,7 @@ def cos(ang):
 	cos(0)
 			returns 1
 	"""
-	return(round(math.cos(arad(ang)),8));
+	return(math.cos(toRad(ang)));
 
 def cosh(ang):
 	"""
@@ -107,7 +143,8 @@ def cosh(ang):
 	cosh(90)
 			returns 2.50917853
 	"""
-	return(round(math.cosh(arad(ang)),8));
+	return(math.cosh(toRad(ang)));
+	
 def acos(val):
 	"""
 	Math Function
@@ -118,8 +155,8 @@ def acos(val):
 	acos(0)
 			returns 0
 	"""
-	dm=val/2*.0000000075;
-	return(round(adeg(math.acos(val+dm)),7));
+	dm=0;#val/2*.0000000075; used in early versions with rounded values
+	return(toDeg(math.acos(val+dm)));
 
 def acosh(val):
 	"""
@@ -131,7 +168,8 @@ def acosh(val):
 	acosh(2.50917853)
 			returns 90
 	"""
-	return(round(adeg(math.acosh(val)+.0000000005),7));
+	dm=0;#.0000000005
+	return(toDeg(math.acosh(val)+dm));
 
 
 def tan(ang):
@@ -144,7 +182,7 @@ def tan(ang):
 	tan(45)
 			returns 1
 	"""
-	return(round(math.tan(arad(ang)),7));
+	return(math.tan(toRad(ang)));
 
 def atan(val):
 	"""
@@ -157,7 +195,7 @@ def atan(val):
 			returns 45
 	"""
 	
-	return(round(adeg(math.atan(val)),8));
+	return(toDeg(math.atan(val)));
 
 def tanh(ang):
 	"""
@@ -169,10 +207,19 @@ def tanh(ang):
 	tan(45)
 			returns 0.65579421
 	"""
-	return(round(math.tanh(arad(ang)),8));
+	return(math.tanh(toRad(ang)));
 	
 def atanh(val):
-	return(round(adeg(math.atanh(val)),6));
+	"""
+	Math Function
+	-------------
+	
+	Returns the angle of an hyperbolic tangent arc value.
+	
+	atanh(0.65579421)
+			returns 45.0
+	"""
+	return(toDeg(math.atanh(val)));
 
 
 def atan2(y,x):
@@ -186,9 +233,9 @@ def atan2(y,x):
 			returns 45
 	"""
 	
-	return(round(adeg(math.atan2(y,x)),5));
+	return(toDeg(math.atan2(y,x)));
 
-def sqrt(num,y=2,digits=8):
+def sqrt(num,y=2):
 	"""
 	Math Function
 	-------------
@@ -200,15 +247,17 @@ def sqrt(num,y=2,digits=8):
 	sqrt(2,3,2)	returns 1.26
 	
 	"""
-	if(y==0):
-		return(infinite);
+	num=toFloat(num);
+	if(toFloat(y)==0.0):
+		xraise("SQRT 0 of "+str(num)+" is undefined!");
+		return(null);
 	else:
 		try:
 			invers=1/y;
-			return(round(math.pow(num,invers),digits));
+			return(math.pow(num,invers));
 		except:
 			try:
-				return(round(math.sqrt(num),digits));
+				return(math.sqrt(num));
 			except:
 				return(0.0);
 
@@ -243,44 +292,96 @@ def oct2dec(num):
 	"""
 	return(int(num,8));
 
-def hex2dec(num):
+def hexToDec(num):
 	"""
 	Math Function
 	-------------
 	
 	Hexadecimal to decimal:
 	
-	hex2dec('0F')
+	hexToDec('0F')
 		returns 15
 	
 	"""
 	return(int(num,16));
 
-def hex2bytes(num):
+def hexToBList(num):
 	"""
 	Math Function
 	-------------
 	
-	Hexadecimal to bytes:
+	Hexadecimal to Bytes List:
 	
-	hex2bytes("ffff")
-		returns (255,255);
+	hex2List("fffff")
+		returns (15,255,255);
 	"""
 	out=[];
+	if(len(num)%2==1):
+		num="0"+str(num);
+	
 	for f in range(0,len(num),2):
 		out.append(int(num[f:f+2],16));
 	return(out);
 
+def decToBin(inp):
+	"""
+	Math Function
+	-------------
+	
+	Decimal to Binary:
+	
+	decToBin(138)
+	
+		returns '10001010'
+	"""
+	num=toInteger(inp);
+	return(bin(num)[2:]);
+	
+def decToHex(inp):
+	"""
+	Math Function
+	-------------
+	
+	Decimal to Hexadecimal:
+	
+	decToHex(16383000)
+	
+		returns 'f9fc18'
+	"""
+	num=toInteger(inp);
+	return(hex(num)[2:]);
 
-def dec2bytes(inp):
+def hexToBList(num):
+	"""
+	Math Function
+	-------------
+	
+	Hexadecimal to Bytes List:
+	
+	hexToBList('fffff')
+		returns (15,255,255);
+	"""
+	out=[];
+	num=str(num);
+	if (len(num)%2==1):
+		num="0"+num;
+
+	for f in xrange(0,len(num),2):
+		val=substr(num,f,2);
+		out.append(int(val,16));
+
+	return(out);
+
+
+def decToBList(inp):
 	"""
 	Math Function
 	-------------
 	
 	Decimal to bytes:
 	
-	dec2bytes(65535)
-		returns (255,255);
+	decToBList(1638400)
+		returns [25,0,0];
 	"""
 	out=[];
 	while inp>255:
@@ -291,6 +392,7 @@ def dec2bytes(inp):
 	return(out);
 
 
+
 def col(hexa):
 	"""
 	Math Function
@@ -299,7 +401,7 @@ def col(hexa):
 	col("ffffff") to tuple(r,g,b)
 	
 	"""
-	out=dec2bytes(hex2dec(hexa));
+	out=decToBList(hexToDec(hexa));
 	while len(out)<3:
 		out.insert(0,0);
 	return( out );
@@ -318,14 +420,19 @@ def pal(n):
 	
 	
 	"""
-	global BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, BRIGHTBLACK, BRIGHTRED, BRIGHTGREEN, BRIGHTYELLOW, BRIGHTBLUE, BRIGHTMAGENTA, BRIGHTCYAN, BRIGHTWHITE;
-	global black, red, green, yellow, blue, magenta, cyan, white, brightblack, brightred, brightgreen, brightyellow, brightblue, brightmagenta, brightcyan, brightwhite;
+	colnames=["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white", "brightblack", "brightred", "brightgreen", "brightyellow", "brightblue", "brightmagenta", "brightcyan", "brightwhite"];
 	
-	try:
-		n==1;
-		BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, BRIGHTBLACK, BRIGHTRED, BRIGHTGREEN, BRIGHTYELLOW, BRIGHTBLUE, BRIGHTMAGENTA, BRIGHTCYAN, BRIGHTWHITE=black, red, green, yellow, blue, magenta, cyan, white, brightblack, brightred, brightgreen, brightyellow, brightblue, brightmagenta, brightcyan, brightwhite=[0, 0, 0], [159, 0, 0], [0, 159, 0], [159, 159, 0], [0, 0, 159], [159, 0, 159], [0, 159, 159], [159, 159, 159], [36, 36, 36], [189, 0, 0], [0, 189, 0], [189, 189, 0], [0, 0, 189], [189, 0, 189], [0, 189, 189], [189, 189, 189];
-	except:
-		BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, BRIGHTBLACK, BRIGHTRED, BRIGHTGREEN, BRIGHTYELLOW, BRIGHTBLUE, BRIGHTMAGENTA, BRIGHTCYAN, BRIGHTWHITE=black, red, green, yellow, blue, magenta, cyan, white, brightblack, brightred, brightgreen, brightyellow, brightblue, brightmagenta, brightcyan, brightwhite=[0, 0, 0], [215, 0, 0], [0, 215, 0], [215, 215, 0], [0, 0, 215], [215, 0, 215], [0, 215, 215], [215, 215, 215], [51, 51, 51], [255, 0, 2], [0, 255, 3], [253, 255, 0], [0, 0, 255], [255, 0, 255], [0, 255, 255], [255, 255, 255];
+	n=toInt(n);
+	if(n==1):
+		COLVALUES=[	[0, 0, 0], [159, 0, 0], [0, 159, 0], [159, 159, 0], [0, 0, 159], [159, 0, 159], [0, 159, 159], [159, 159, 159], [36, 36, 36], [189, 0, 0], [0, 189, 0], [189, 189, 0], [0, 0, 189], [189, 0, 189], [0, 189, 189], [189, 189, 189]];
+
+	else:
+		COLVALUES=[[0, 0, 0], [215, 0, 0], [0, 215, 0], [215, 215, 0], [0, 0, 215], [215, 0, 215], [0, 215, 215], [215, 215, 215], [51, 51, 51], [255, 0, 2], [0, 255, 3], [253, 255, 0], [0, 0, 255], [255, 0, 255], [0, 255, 255], [255, 255, 255]];
+	out=dict();
+	for f in xrange(0,min(len(COLVALUES),len(colnames))):
+		out[colnames[f]]=COLVALUES[f];
+	#	return({"names":colnames,"values":COLVALUES});
+	return(out);
 
 
 def pow(x,y=2):
@@ -351,7 +458,7 @@ def pow(x,y=2):
 				printf("Error at power!");
 				return(0.0);
 	
-def exp(x=1,digits=8):
+def exp(x=1):
 	"""
 	Math Function
 	-------------
@@ -360,18 +467,15 @@ def exp(x=1,digits=8):
 	
 	"""
 	try:
-		return(round(math.exp(x),digits));
+		return(math.pow(e,x));
 	except:
 		try:
-			return(math.pow(e,x));
+			return(e**x);
 		except:
-			try:
-				return(e**x);
-			except:
-				printf("Error at e-exponential!");
-				return(1);
+			xraise("Error at e-exponential!");
+	return(1.0);
 
-def log(x=1,digits=8):
+def log(x=1):
 	"""
 	Math Function
 	-------------
@@ -379,14 +483,13 @@ def log(x=1,digits=8):
 	log(2)	returns 0.30103 (log_10(x))
 	
 	"""
+	if(toFloat(x)==0.0):
+		return(-math.inf);
 	try:
-		return(round(math.log10(x),digits));
+		return(math.log10(x));
 	except:
-		try:
-			return(math.log10(x));
-		except:
-			printf("Error at 10-based logarythm!");
-			return(0);
+		xraise("Error at 10-based logarythm!");
+	return(0);
 
 def ln(x=1,digits=8):
 	"""
@@ -397,15 +500,12 @@ def ln(x=1,digits=8):
 	
 	"""
 	try:
-		return(round(math.log(x),digits));
+		return(math.log(x));
 	except:
-		try:
-			return(math.log(x));
-		except:
-			printf("Error at natural logarythm!");
-			return(0);
+		printf("Error at natural logarythm!");
+		return(0);
 
-def div(x,y=1,digits=8):
+def div(x,y=1):
 	"""
 	Math Function
 	-------------
@@ -414,14 +514,16 @@ def div(x,y=1,digits=8):
 	div(3,0)	returns infinite
 	
 	"""
-	if(y==0):
+	y=toFloat(y);
+	x=toFloat(x);
+	if(y==0.0):
 		return(infinite);
 	else:
 		try:
-			return(round(y/x,digits));
+			return(x/y);
 		except:
-			printf("Error at division!");
-			return(0);
+			xraise("Error at division!");
+	return(0.0);
 
 def fabs(x,digits=8):
 	"""
@@ -429,14 +531,13 @@ def fabs(x,digits=8):
 	-------------
 	
 	fabs(-3.33333)		returns 3.33333
-	fabs( 3.33333, 2)	returns 3.33
 	
 	"""
 	try:
-		return(round(math.fabs(x),digits));
+		return(math.fabs(x));
 	except:
-		printf("Error at fabs!");
-		return(0);
+		xraise("Error at fabs!");
+	return(0.0);
 
 def floor(num):
 	"""
@@ -468,102 +569,33 @@ def ceil(num):
 		printf("Error at ceil!");
 		return(0);
 
-def fmod(x,y,digits=8):
+def fmod(x,y):
 	"""
 	Math Function
 	-------------
 	
 	fmod(5,3.3)	returns -1.7
 	
-	fmod(10,3,2)	returns  1.0
+	fmod(10,3)	returns  1.0
 	
 	"""
 	try:
-		return(round(math.fmod(x,y),digits));
+		return(math.fmod(x,y));
 	except:
-		try:
-			return(math.fmod(x,y));
-		except:
-			printf("Error at fmod!");
-			return(0);
+		printf("Error at fmod!");
+		return(0);
 
+#min native
+#max native
 
-
-DEFS_MATH=[
-		'__builtins__', 
-		'__add__',
-		'__class__',
-		'__contains__',
-		'__delattr__',
-		'__dir__',
-		'__eq__',
-		'__format__',
-		'__ge__',
-		'__getattribute__',
-		'__getitem__',
-		'__getnewargs__',
-		'__gt__',
-		'__hash__',
-		'__init__',
-		'__init_subclass__',
-		'__iter__',
-		'__le__',
-		'__len__',
-		'__lt__',
-		'__mod__',
-		'__mul__',
-		'__ne__',
-		'__new__',
-		'__reduce__',
-		'__reduce_ex__',
-		'__repr__',
-		'__rmod__',
-		'__rmul__',
-		'__setattr__',
-		'__sizeof__',
-		'__str__',
-		'__subclasshook__',
-		'__doc__', 
-		'__loader__', 
-		'__name__', 
-		'__package__', 
-		'__spec__',
-		'help',
-		'version',
-		'DEFS_MATH',
-		'__annotations__',
-		'__builtins__',
-		'__cached__',
-		'__doc__',
-		'__file__',
-		'__loader__',
-		'__name__',
-		'__package__',
-		'__spec__'
-		];
-CMDS_MATH=dir(); 
 
 def main(args):
-	print("""MATH_H\n
 	
-	Set of common mathematical operations.
-	
-	Directory
-	---------
-	\n""");
-	a=CMDS_MATH;
-	a.sort();
-	for f in a:
-		if(f not in DEFS_MATH):
-			h_doc=str(eval(f+".__doc__")).strip();
-			if(h_doc!="None"):
-				print("\t"+f);
-	"""
-	for f in CMDS_:
-		if(f not in DEFS_):
-			h_doc=str(eval(f+".__doc__")).strip();
-			if(h_doc!="None"):
-				printf("%s\n",h_doc);"""
+	echo (toRad(90));
+	echo (sqr(2));
+	echo (hexToBList("5384ff"));
+	echo (decToBList(1638400));
+	echo (pal(1));
 	return(0);
 
 if __name__ == '__main__':

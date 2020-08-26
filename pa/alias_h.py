@@ -294,10 +294,8 @@ def pushLast(where,what):
     where.append(what);
     return(where.length);
 
-def popFirst(inp,num=1):
-    out=[];
-    for f in range(0,num):
-        out.append(inp.pop(0));
+def popFirst(inp):
+    out=inp.pop(0);
     return(out);
     
 def pushFirst(where,what):
@@ -325,16 +323,16 @@ def isDict(obj):
     return(type(obj)==type({}));
 
 def isIn(what,where):
-	return(what in where);
-	
+    return(what in where);
+    
 
 def typeOf(input):
-	cl=str(type(input));
-	out=str(cl.split("'")[1]).lower();
-	
-	if(isIn(out,CORRECT_TYPES)):
-		out=CORRECT_TYPES[out];
-	return(out);
+    cl=str(type(input));
+    out=str(cl.split("'")[1]).lower();
+    
+    if(isIn(out,CORRECT_TYPES)):
+        out=CORRECT_TYPES[out];
+    return(out);
 
 def main(*argv):
     echo(APP+LOADED);
@@ -348,6 +346,7 @@ def main(*argv):
     echo(popLast(a));
     echo(a);
     echo(typeOf(a));
+    
 
 if __name__ == '__main__':
     import sys;

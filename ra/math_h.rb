@@ -653,7 +653,7 @@ if caller.length==0 then;	#main file
 	echo (decToBList(1638400));
 	echo (col("538457"));
 	echo (pal(1));
-	return(0);
+	exit(0);
 end;
 
 

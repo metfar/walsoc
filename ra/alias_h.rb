@@ -44,6 +44,7 @@ module Alias_H
 				"trueclass"=>	"boolean",
 				"falseclass"=>	"boolean"
 				};
+	alias :import	:require;
 	
 	def List(*vargs);
 		"""
@@ -308,7 +309,7 @@ module Alias_H
 	
 	def popFirst(*input);
 		out=*input[0].shift(1);
-		return(out);
+		return(out[0]);
 	end;
 	
 	def pushFirst(where,what);
@@ -354,10 +355,10 @@ module Alias_H
 	end;
 end;
 
+include Alias_H;
 	
 def main(*argv);
-	include Alias_H;
-
+	
 	echo (APP+LOADED);
 	echo is(defined? APP);
 	echo (xrange(5));

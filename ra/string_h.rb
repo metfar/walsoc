@@ -235,8 +235,9 @@ module String_H
 	alias	:mid		:substr;
 end;
 
+include String_H;
+
 if caller.length==0 then;	#main file
-	include String_H;
 	echo (APP+LOADED);
 	echo (version);
 	echo (typeOf(ALIAS_H));

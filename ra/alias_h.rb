@@ -20,6 +20,7 @@
 #  MA 02110-1301, USA.
 #  
 #  
+require "./asc_h";
 
 module Alias_H
 	#ARGV native
@@ -370,6 +371,7 @@ def main(*argv);
 	echo(popLast(a));
 	echo(a);
 	echo(typeOf(a));
+	print (ascToIntl("¡El murciélago veloz del año comió pingüinos con Garçía!")+"\n");
 end;
 
 if caller.length==0 then	#main file

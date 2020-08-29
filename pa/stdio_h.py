@@ -36,7 +36,7 @@ except NameError:
 	from alias_h import * ;
 STDIO_H=TRUE;
 
-import sys,io,os;
+import sys,io,os,shutil;
 from pprint import pformat;
 import urllib.request;
 
@@ -306,6 +306,16 @@ def exists(name):
 
 
 def file_get_contents(url,length=null):
+	"""
+		File Functions
+		--------------
+		
+		file_get_contents('https://www.google.com/index.html')
+		or
+		file_get_contents('/tmp/myFile.txt')
+		
+		
+		"""
 	out=null;
 	if(url.startswith("https:") or url.startswith("https:")):
 		if(length==null):
@@ -331,6 +341,127 @@ def file_get_contents(url,length=null):
 				pass;
 	return(out);
 
+def	rm (name):
+	"""
+	File Functions
+	--------------
+	
+	rm('/tmp/myFile.txt')
+			if it deletes the file, it will return true
+	
+	"""
+	if(fileExists(name)):
+		try:
+			os.unlink(name);
+			return(true);
+		except:
+			return(false);
+	return(false);
+
+
+def rmdir(name,force=false):
+	"""
+	File Functions
+	--------------
+	
+	rmdir('/tmp/dir01')
+			if it is an empty directory,
+			and it is being removed, it will return true
+			
+	rmdir('/tmp/dir01',true)
+			if it is being removed, empty or not,
+			it will return true
+	
+	"""
+	if(dirExists(name)):
+		try:
+			os.rmdir(name);
+			return(true);
+		except:
+			if(not force):
+				return(false);
+			else:
+				try:
+					shutil.rmtree(name,true);
+					return(true);
+				except:
+					pass;
+	return(false);
+
+def mkdir(name):
+	"""
+	File Functions
+	--------------
+	
+	mkdir('tmp')
+					makes directory tmp
+	"""
+	try:
+		os.mkdir(name);
+		return(true);
+	except:
+		return(false);
+
+def chdir(name):
+	"""
+	File Functions
+	--------------
+	
+	chdir('tmp')
+					change directory to tmp
+	"""
+	try:
+		os.chdir(name);
+		return(true);
+	except:
+		return(false);
+
+def ls(dirname=".",contains="",startsWith="",endsWith=""):
+	"""
+	File Functions
+	--------------
+	
+	ls(dirname='tmp')
+					returns the ls of directory tmp
+	ls(dirname='tmp',contains='a')
+					list files/directories in tmp containing a
+	ls(dirname='tmp',contains='a',startsWith='n',endsWith='py')
+					list files/directories in tmp with all conditions
+					
+	
+	
+	"""
+	try:
+		o=os.listdir(dirname);
+	except:
+		o=[];
+	out=[];
+	for f in o:
+		add=True;
+		if(len(contains)>0 and not(contains in f)):
+			add=False;
+		if(len(startsWith)>0 and not(f.startswith(startsWith))):
+			add=False;
+		if(len(contains)>0 and not(f.endswith(endsWith))):
+			add=False;
+		if(add):
+			out.append(f);
+	return(out);
+		
+def touch(name):
+	"""
+	File Functions
+	--------------
+	
+	touch('file.txt')
+	
+	"""
+	try:
+		os.utime(name, None);
+		return(True);
+	except:
+		return(False);
+
 
 def main(args):
 	
@@ -345,9 +476,10 @@ def main(args):
 	arch=fopen("tmp.tmp","rt");
 	printf("%s",fread(arch));
 	fclose(arch);
-	print("file_get_contents('pepe')",file_get_contents("pepe"));
-	print("file_get_contents('tmp.tmp')",file_get_contents("tmp.tmp"));
-	
+	printR("file_get_contents('pepe')",file_get_contents("pepe"),"-------");
+	printR("file_get_contents('tmp.tmp')",file_get_contents("tmp.tmp"),"-------");
+	rm("tmp.tmp");
+	printR(ls());
 	return(0);
 
 if __name__ == '__main__':

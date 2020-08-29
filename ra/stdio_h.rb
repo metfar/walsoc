@@ -258,13 +258,14 @@ module Stdio_H
 		
 				returns target name if it has or null
 		""" 
-		if(os.path.islink(name)):
-			tmp=os.readlink(name);
+		if(File.exist? (name) and File.lstat(name).symlink?)	then;
+			tmp=File.readlink(name);
 			return(tmp);
-		else:
+		else;
 			return(null);
-			
-	def linkExists(name):
+		end;
+	end;
+	def linkExists(name);
 		"""
 		File Functions
 		--------------
@@ -272,13 +273,15 @@ module Stdio_H
 		linkExists('/tmp')
 				returns true if it exists and target too
 		"""
-		if(os.path.islink(name)):
-			tmp=os.readlink(name);
+		if(File.exist? (name)) then;
+			tmp=readlink(name);
 			return(exists(tmp));
-		else:
+		else;
 			return(false);
+		end;
+	end;
 	
-	def exists(name):
+	def exists(name);
 		"""
 		File Functions
 		--------------
@@ -286,35 +289,205 @@ module Stdio_H
 		exists('/tmp')
 				returns true if it exists as file/dir/link
 		"""
-		if 		(name==null):
+		if 		(name==nil)	then;
 				return(false);
-				
-		elif 	(fileExists(name)):
+			
+		elsif 	(fileExists(name))	then;
 				return(true);
 				
-		elif 	(dirExists(name)):
+		elsif 	(dirExists(name))	then;
 				return(true);
 				
-		elif 	(os.path.islink(name)):
+		elsif 	(File.exist?(name) and File.lstat(name).symlink?)	then;
 				return(true);
-		else:
+		else;
 				return(false);
+		end;
+	end;
+
 
 	def file_get_contents(url);
-		if	(url.starts_with?("http:")) then;
-			out=Net::HTTP.get_response(URI.parse(name)).body;
-		elsif(url.starts_with?("https:")) then;
-			out=Net::HTTP.get_response(URI.parse(name)).body;
-		elsif(exists(name)) then;
-			tmp=fopen(name,"r");
-			out=tmp.read();
-			fclose(tmp);
-		else;
-			out=null;
+		"""
+		File Functions
+		--------------
+		
+		file_get_contents('https://www.google.com/index.html')
+		or
+		file_get_contents('/tmp/myFile.txt')
+		
+		
+		"""
+		out=nil;
+		if	(url.start_with?("http:")) then;
+			begin
+				out=Net::HTTP.get_response(URI.parse(name)).body;
+			rescue
+			end;
+		elsif(url.start_with?("https:")) then;
+			begin
+				out=Net::HTTP.get_response(URI.parse(name)).body;
+			rescue
+			end;
+		elsif(exists(url)) then;
+			begin
+				tmp=fopen(url,"r");
+				out=tmp.read();
+				fclose(tmp);
+			rescue
+			end;
+		end;
 		return(out);
 	
 	end;
 
+	def	rm (name);
+		"""
+		File Functions
+		--------------
+		
+		rm('/tmp/myFile.txt')
+				if it deletes the file, it will return true
+		
+		"""
+		if(fileExists(name)) then;
+			begin
+				if(File.unlink(name)) then;
+					return(true);
+				else;
+					return(false);
+				end;
+			rescue
+			end;
+		end;
+		return(false);
+	end;
+
+	def rmdir(name,force=false);
+		"""
+		File Functions
+		--------------
+		
+		rmdir('/tmp/dir01')
+				if it is an empty directory,
+				and it is being removed, it will return true
+				
+		rmdir('/tmp/dir01',true)
+				if it is being removed, empty or not,
+				it will return true
+		
+		"""
+		if(dirExists(name)) then;
+			begin
+				if(Dir.rmdir(name)==0) then;
+					return(true);
+				else;
+					return(false);
+				end;
+			rescue Errno::ENOTEMPTY, Errno::ENOENT
+				if(!force) then;
+					return(false);
+				else;
+					begin;
+						FileUtils.remove_dir(name,true);
+					rescue;
+					end;
+				end;
+			end;
+		end;
+		return(false);
+	end;
+
+	def mkdir(name);
+		"""
+		File Functions
+		--------------
+		
+		mkdir('tmp')
+						makes directory tmp
+		"""
+		begin
+			return(0==Dir.mkdir(name));
+		rescue
+			return(false);
+		end;
+	end;
+	
+	def chdir(name);
+		"""
+		File Functions
+		--------------
+		
+		chdir('tmp')
+						change directory to tmp
+		"""
+		begin
+			if(0==Dir.chdir(name)) then;
+				return(true);
+			end;
+		rescue;
+		end;
+		return(false);
+	end;
+
+	def ls(dirname=".",contains="",startsWith="",endsWith="");
+		"""
+		File Functions
+		--------------
+		
+		ls(dirname='tmp')
+						returns the ls of directory tmp
+		ls(dirname='tmp',contains='a')
+						list files/directories in tmp containing a
+		ls(dirname='tmp',contains='a',startsWith='n',endsWith='py')
+						list files/directories in tmp with all conditions
+						
+		
+		
+		"""
+		begin
+			o=Dir.entries(dirname);
+		rescue
+			o=[];
+		end;
+		out=[];
+		for f in o;
+			add=true;
+			if(len(contains)>0 and not(f.include? contains)) then;
+				add=false;
+			end;
+			if(len(startsWith)>0 and not(f.start_with?(startsWith))) then;
+				add=false;
+			end;
+			if(len(contains)>0 and not(f.end_with(endsWith))) then;
+				add=false;
+			end;
+			if(add) then;
+				if(f!=".." and f!=".")	then;
+					out.append(f);
+				end;
+			end;
+		end;
+		return(out);
+	end;
+	
+	def touch(name);
+		"""
+		File Functions
+		--------------
+		
+		touch('file.txt')
+		
+		"""
+		begin
+			FileUtils.touch(name);
+			return(true);
+		rescue
+			return(false);
+		end;
+	end;
+
+
+	
 	alias 	:print_r	:printR;
 end;
 	
@@ -337,6 +510,9 @@ if (caller.length==0) then;	#main file
 	printf("%s",fread(arch));
 	fclose(arch);
 	
-	printR("file_get_contents('pepe')",file_get_contents("pepe"));
+	printR("file_get_contents('pepe')",file_get_contents("pepe"),'------');
+	printR("file_get_contents('tmp.tmp')",file_get_contents("tmp.tmp").split("\n").join(" "),'------');
+	rm("tmp.tmp");
+	printR(ls());
 	exit(0);
 end;

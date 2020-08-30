@@ -25,7 +25,7 @@
 
 import sys;
 from os import getpid,path;
-import asc_h;
+from asc_h import *;
 
 #"constants"
 
@@ -46,7 +46,8 @@ LOADED=" loaded"+EXCLAMATION;
 CORRECT_TYPES={
 				"str":  "string",
 				"int":  "integer",
-				"bool": "boolean"
+				"bool": "boolean",
+				"set":	"set"
 				};
 
 def List(*vargs):
@@ -112,7 +113,9 @@ def echo(*vargs):
 		ECHO=ON;
 	args=[];
 	for f in vargs:
-		if(type(f)==type(True)):
+		if(type(f)==type(None)):
+			args.append("null");
+		elif(type(f)==type(True)):
 			if(f==True):
 				args.append("true");
 			else:
@@ -334,6 +337,8 @@ def typeOf(input):
 	
 	if(isIn(out,CORRECT_TYPES)):
 		out=CORRECT_TYPES[out];
+	elif(out.endswith(".set")):
+		out="set";
 	return(out);
 
 def main(*argv):
@@ -348,7 +353,7 @@ def main(*argv):
 	echo(popLast(a));
 	echo(a);
 	echo(typeOf(a));
-	
+	print (ascToIntl("¡El murciélago veloz del año comió pingüinos con Garçía!")+"\n");
 
 if __name__ == '__main__':
 	import sys;

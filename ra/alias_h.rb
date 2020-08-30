@@ -24,7 +24,8 @@ require "./asc_h";
 
 module Alias_H
 	#ARGV native
-	null=Null=NULL=NONE=None=nil;
+	null=nil;
+	Null=NULL=NONE=None=nil;
 	ON=True=TRUE=true;
 	OFF=False=false;
 	ALIAS_H=TRUE;
@@ -130,7 +131,31 @@ module Alias_H
 		
 		
 		begin
-			out=procStr(sprintf("%s",args.to_s));#args.join($GLUE);
+			reargs=[];
+			flg=false;
+			for f in args;
+				if(f.class==nil.class) then;
+					reargs.append("null");
+				elsif(typeOf(f)=="set") then;
+					reargs.append(str(args));
+					flg=true;
+				else;
+					reargs.append(f);
+				end;
+			end;
+			if(not flg) then;
+				out=procStr(sprintf("%s",reargs.to_s));#args.join($GLUE);
+			else;
+				out="";
+				for f in args;
+						
+					begin
+						out+=f.getContent();
+					rescue
+						out+=str(f);
+					end;
+				end;	
+			end;
 		rescue
 			out="";
 		end;
@@ -143,9 +168,11 @@ module Alias_H
 	
 	#sprintf native
 	def str(input)
-		if(input.class==nil.class); then
+		if(input.class==nil.class) then;
 			out="null";
-		else
+		elsif(input.class.to_s.end_with?"set") then;
+			out=input.to_s;
+		else;
 			out=sprintf("%s",input);
 		end;
 		return(out);
@@ -236,7 +263,11 @@ module Alias_H
     end;
     
 	def xraise(message="Error!");
-		raise XRaise.new(message);
+		begin
+			raise XRaise.new(message);
+		rescue
+			print(str(message)+"\n");
+		end;
 	end;
 	
 	def xrange(*vargs);
@@ -349,8 +380,10 @@ module Alias_H
 
 	def typeOf(input);
 		out=str(input.class).downcase;
-		if(isIn(out,CORRECT_TYPES)) then
+		if(isIn(out,CORRECT_TYPES)) then;
 			out=CORRECT_TYPES[out];
+		elsif(out.end_with? ".set" or out.end_with? ":set") then;
+			out="set";
 		end;
 		return(sprintf("%s",out));
 	end;

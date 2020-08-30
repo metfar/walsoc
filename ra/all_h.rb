@@ -21,10 +21,9 @@
 #  
 #  
 
-for f in "asc,alias,string,enum,math,stdio".split(",");
+for f in "asc,alias,string,enum,math,stdio,set".split(",");
 	eval("require './"+f+"_h';");
 end;
-
 
 def main(*argv);
 	echo(APP+LOADED);

@@ -68,6 +68,16 @@ module Stdio_H
 		ob_end_clean();
 		return(out);
 	end;
+	
+	
+	def aGrossoModo(x);
+		""" aGrossoModo
+	
+			Filters codes and spaces of strings to make a rough comparison.
+			"""
+		return(sprintf("%s",x).tr("\n",'').tr("\t",'').tr(' ','').tr("'",'').tr('"',''));
+	end;
+	
 	def printR(*vargs);
 		'''
 		printR 
@@ -90,6 +100,7 @@ module Stdio_H
 				
 		'''
 		args=(vargs);
+		tmp=$tmp_stdout.string;
 		ob_start();
 		for a in args;
 			if(typeOf(a)=="list" or typeOf(a)=="dict");
@@ -103,11 +114,12 @@ module Stdio_H
 		end;
 		out=ob_get_clean();
 		
-		#$stdout = old_stdout;
-		#out=out.string;
+		$stdout = $old_stdout;
+		out=tmp+out;
 		if(len(out)>len($SEP) and out[-len($SEP)]==$SEP) then;
 			out=out[..-len($SEP)];
 		end;
+		
 		print(out+$LF);
 		return(out);
 	end;
@@ -497,8 +509,9 @@ end;
 include Stdio_H;
 
 if (caller.length==0) then;	#main file
-	print_r('Something',[1,2]);
-	print_r(["la casa roja",[1,2],{"a":1,"b":2}],"Upsi");
+	#ob_start();
+	print('Something',[1,2]);
+	print(["la casa roja",[1,2],{"a":1,"b":2}],"Upsi");
 	arch=fopen("tmp.tmp","wt");
 	for f in xrange(10);
 		fprintf(arch,"%03d\n",f);
@@ -510,9 +523,13 @@ if (caller.length==0) then;	#main file
 	printf("%s",fread(arch));
 	fclose(arch);
 	
-	printR("file_get_contents('pepe')",file_get_contents("pepe"),'------');
-	printR("file_get_contents('tmp.tmp')",file_get_contents("tmp.tmp").split("\n").join(" "),'------');
+	print("file_get_contents('pepe')",file_get_contents("pepe"),'------');
+	print("file_get_contents('tmp.tmp')",file_get_contents("tmp.tmp").split("\n").join(" "),'------');
 	rm("tmp.tmp");
-	printR(ls());
+	#a=ob_get_contents();
+	#ob_end();
+	#echo(aGrossoModo(a));
+	#Something[1,2][lacasaroja,[1,2],{:a=>1,:b=>2}]Upsi000001002003004005006007008009file_get_contents(pepe)------file_get_contents(tmp.tmp)000001002003004005006007008009------
+	
 	exit(0);
 end;

@@ -26,6 +26,8 @@ import sys;
 import os;
 from alias_h import *;
 
+STRING_H=True;
+
 def array(*args, **kwargs):
     n=0;
     res=list();

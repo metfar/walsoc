@@ -13,13 +13,6 @@ Write source code in any language on a common basis, php-like.
 - Java implementation
 - Proper documentation
 
-## Install
-
-  python3 setup.py install
-
-## Uninstall
-
-  pip uninstall walsoc
 
 ## License
 

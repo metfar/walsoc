@@ -40,13 +40,48 @@ import sys,io,os,shutil;
 from pprint import pformat;
 import urllib.request;
 
-stderr=sys.stderr;
-stdin=sys.stdin;
-stdout=sys.stdout;
+ORIG_STDERR=stderr=sys.stderr;
+ORIG_STDIN=stdin=sys.stdin;
+ORIG_STDOUT=old_stdout=stdout=sys.stdout;
 SEP=" ";
 LF="\n";
 TB=2;
 TAB=SEP*TB;
+
+def ob_start():
+	global old_stdout,stdout,tmp_stdout;
+	old_stdout = stdout;
+	tmp_stdout=io.StringIO();
+	stdout=tmp_stdout;
+	
+def ob_clean():
+	global old_stdout,stdout,tmp_stdout;
+	stdout=old_stdout;
+	tmp_stdout=io.StringIO();
+	stdout=tmp_stdout;
+	
+def ob_end():
+	global old_stdout,stdout;
+	stdout=old_stdout;
+	
+def ob_end_clean():
+	global old_stdout,stdout,tmp_stdout;
+	tmp_stdout=io.StringIO();
+	stdout=old_stdout;
+	
+
+def ob_get_contents():
+	global old_stdout,stdout,tmp_stdout;
+	try:
+		out=tmp_stdout.getvalue();
+	except:
+		out="";
+	return(out);
+
+def ob_get_clean():
+	out=ob_get_contents();
+	ob_end_clean();
+	return(out);
 
 def printR(*args):
 	"""

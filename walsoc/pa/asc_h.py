@@ -47,6 +47,7 @@ else:
 	LEFT_ARR,RIGHT_ARR,UP_ARR,DOWN_ARR=75,77,72,80;
 
 
+
 #   JUST TO REMEMBER "NUL","SOH","STX","ETX","EOT","ENQ","ACK","BEL","BS","HT","LF","VT","FF","CR","SO","SI","DLE","DC1","DC2","DC3","DC4","NAK","SYN","ETB","CAN","EOM","SUB","ESC","FS","GS","RS","US"
 
 ASC=[   #0      1       2       3       4       5       6       7 
@@ -1515,8 +1516,8 @@ def toList(inp):
 
 
 def ascToIntl(inString=""):
-	substi="ÀÈÌÒÙẀỲǸÂÊÎÔÛŴŶÁÉÍÓÚẂÝŃÄËÏÖÜẄŸÑÇàèìòùẁỳǹâêîôûŵŷáéíóúẃýńäëïöüẅÿñç";
-	substo="AEIOUWYNAEIOUWYAEIOUWYNAEIOUWYNCaeiouwynaeiouwyaeiouwynaeiouwync";
+	substi='¡¿~_¬\ÀÈÌÒÙẀỲǸÂÊÎÔÛŴŶÁÉÍÓÚẂÝŃÄËÏÖÜẄŸÑÇàèìòùẁỳǹâêîôûŵŷáéíóúẃýńäëïöüẅÿñç';
+	substo='!?---/AEIOUWYNAEIOUWYAEIOUWYNAEIOUWYNCaeiouwynaeiouwyaeiouwynaeiouwync';
 	out="";
 	for f in toList(inString):
 		cha=f;
@@ -1531,13 +1532,23 @@ def ascToIntl(inString=""):
 			pass;
 	return(out);
 
+def aGrossoModo(x,force=False):
+	""" aGrossoModo
+	
+			Filters codes and spaces of strings to make a rough comparison.
+			"""
+	out=str(ascToIntl(x)).replace("\\\\","\\").replace("\t","").replace("\r","").replace("\n","").replace('"',"").replace("'","").replace(" ","").replace('\\n',"").replace("/n","");
+	if(force):
+		out=out.replace('[',"").replace('{',"").replace(']',"").replace('}',"").replace('(',"").replace(')',"").replace(':',"").replace('.',"").replace(',',"");
+	return(out);
 
 def main(*argv):
 	print(chr(164));
 	print(asc("ñ"));
 	print(toList("La casa roja"));
 	print(toList({"la":2,"casa":1}));
-	print (ascToIntl("¡El murciélago veloz del año comió pingüinos con Garçía!"));
+	print (ascToIntl("¿Comió maní?"));
+	
 	
 if __name__ == '__main__':
 	import sys;

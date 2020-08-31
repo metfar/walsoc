@@ -1,11 +1,11 @@
 # walsoc
 Write source code in any language on a common basis, php-like.
 
-# Working on
+## Working on
 - Python
 - Ruby
 
-# License
+## License
 
   Copyright 2020 William Martinez Bas <metfar@gmail.com>
 
@@ -25,7 +25,8 @@ Write source code in any language on a common basis, php-like.
   MA 02110-1301, USA.
   Proposal: Make a local backup scheme using rsync. You can try to compress it and schedule it using crontab. 
 
-# Get (or keep) in touch
+## Get (or keep) in touch
 
 If you want to get in touch, just send me an e-mail to <metfar@gmail.com>. 
 
+# Thanks!

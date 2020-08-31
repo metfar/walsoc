@@ -44,8 +44,8 @@ Write source code in any language on a common basis, php-like.
 ## Repository
 
   - Full project <https://github.com/metfar/walsoc>
-  - Explorable Python tree <https://github.com/metfar/walsoc/tree/master/pa>
-  - Surfable Ruby tree <https://github.com/metfar/walsoc/tree/master/ra>
+  - Explorable Python tree <https://github.com/metfar/walsoc/tree/master/walsoc/pa>
+  - Surfable Ruby tree <https://github.com/metfar/walsoc/tree/master/walsoc/ra>
 
 ## Get (or keep) in touch
 

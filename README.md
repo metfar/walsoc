@@ -22,7 +22,7 @@ Write source code in any language on a common basis, php-like.
   pip uninstall walsoc
 
 ## Functions' list
-
+		Exit
 		acos
 		acosh
 		aGrossoModo
@@ -54,6 +54,7 @@ Write source code in any language on a common basis, php-like.
 		echo
 		exists
 		exp
+		explode
 		fabs
 		fclose
 		fileExists
@@ -66,6 +67,8 @@ Write source code in any language on a common basis, php-like.
 		getContent
 		hexToBList
 		hexToDec
+		implode
+		inkey
 		instr
 		is_defined
 		isDict
@@ -73,10 +76,12 @@ Write source code in any language on a common basis, php-like.
 		isFloat
 		isIn
 		isInteger
+		isIterable
 		isList
 		isNumeric
 		isString
 		join
+		lastKey
 		left
 		len
 		linkExists
@@ -86,6 +91,7 @@ Write source code in any language on a common basis, php-like.
 		ls
 		lTrim
 		mkdir
+		newKey
 		ob_clean
 		ob_end
 		ob_end_clean
@@ -103,6 +109,7 @@ Write source code in any language on a common basis, php-like.
 		procStr
 		pushFirst
 		pushLast
+		readKey
 		readlink
 		remove
 		rev
@@ -117,9 +124,11 @@ Write source code in any language on a common basis, php-like.
 		sprintf
 		sqrt
 		strtok
+		substi
 		substr
 		tan
 		tanh
+		toArray
 		toCaps
 		toDeg
 		toFloat

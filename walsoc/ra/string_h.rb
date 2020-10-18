@@ -158,7 +158,21 @@ module String_H
 		return(out);
 	end;
 	
-	
+        def isString(obj);
+          return(obj.class=="cas".class);
+        end;
+
+        def isInteger(obj);
+          return(obj.class==1.class);
+        end;
+
+        def isFloat(obj);
+          return(obj.class==1.0.class);
+        end;
+
+        def isNumeric(obj);
+            return(isFloat(obj) or isInteger(obj));
+        end;
 
 
 	def tr(string,characters,replacements);
@@ -220,7 +234,51 @@ module String_H
 	def strtok(string,delimiter=" ");
 		return(split(delimiter,string));
 	end;
+
+        def isIterable(obj);
+            """
+            isIterable  returns True if it has length
+            """
+            out=False;
+            begin
+                obj.length;
+                out=True;
+            rescue
+            end;
+            return(out);
+        end;
 	
+
+        def toArray(obj);
+            """
+            toArray     Converts a string or object into an array
+                        It is is just one object, it will be 1 length array
+                        If it is a string, it will split it into characters
+            """
+            o=[];
+            if(obj.class=="cas".class); then
+                o=obj.chars;
+            else;
+                if(isIterable(obj)); then
+                    for f in obj;
+                        begin
+                            o.append(f);
+                        rescue
+                            o.append(nil);
+                        end;
+                    end;
+                else;
+                    begin;
+                        o.append(obj);
+                    rescue;
+                        o.append(nil);
+                    end;
+                end;
+            end;
+            return(o);
+        end;
+
+
 		
 	alias	:reverse 	:rev;
 	alias	:upper		:toUpper;
@@ -249,5 +307,6 @@ if caller.length==0 then;	#main file
 	echo (substr("la casa roja",-5,2));
 	echo (substr("la casa roja",0,2));
 	echo (rev(CORRECT_TYPES));
+
 end;
 

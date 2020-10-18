@@ -387,6 +387,8 @@ module Alias_H
 		end;
 		return(sprintf("%s",out));
 	end;
+
+    PLANK_TIME=1.0E-43;
 end;
 
 include Alias_H;

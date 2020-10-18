@@ -498,8 +498,18 @@ module Stdio_H
 		end;
 	end;
 
+        def input(text="?");
+          """
+          prompt and return answer as a string
+          """
+	  out="";
+          begin
+            print(text);
+            out=gets.chomp();
+          rescue
+          end;
+        end;
 
-	
 	alias 	:print_r	:printR;
 end;
 	

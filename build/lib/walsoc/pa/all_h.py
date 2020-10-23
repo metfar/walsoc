@@ -21,13 +21,13 @@
 #  MA 02110-1301, USA.
 #  
 #  
-for f in "asc,alias,string,enum,math,stdio,set".split(","):
+for f in "asc,alias,string,enum,math,stdio,colio,set".split(","):
 	exec("from "+f+"_h import *");
 
 def main(*argv):
 	echo(APP+LOADED);
 	echo (is_defined("APP"));
-	return(0);
+	Exit(0);
 	
 if __name__ == '__main__':
 	import sys

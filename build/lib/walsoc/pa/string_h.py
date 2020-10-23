@@ -199,6 +199,55 @@ def strtok(string,delimiter=" "):
 	return(split(delimiter,string));
 	
 
+def mid(string,start,nChars):
+    out=right(string,len(string)-start);
+    out=left(out,nChars);
+    return(out);
+
+def isString(obj):
+    return(type(obj)==type(""));
+
+def isInteger(obj):
+    return(type(obj)==type(1));
+
+
+def isFloat(obj):
+    return(type(obj)==type(1.0));
+
+def isNumeric(obj):
+    return(isFloat(obj) or isInteger(obj));
+
+def isIterable(obj):
+    """
+    isIterable  returns True if it has length
+    """
+    out=False;
+    try:
+        iter(obj);
+        out=True;
+    except:
+        pass;
+    return(out);
+
+def toArray(obj):
+    """
+    toArray     Converts a string or object into an array
+                It is is just one object, it will be 1 length array
+                If it is a string, it will split it into characters
+    """
+    o=[];
+    if(isIterable(obj)):
+        for f in obj:
+            try:
+                o.append(f);
+            except:
+                o.append(null);
+    else:
+        try:
+            o.append(obj);
+        except:
+            o.append(null);
+    return(o);
 
 def instr(*vargs):
     """

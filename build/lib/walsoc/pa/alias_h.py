@@ -340,9 +340,11 @@ def typeOf(input):
 	elif(out.endswith(".set")):
 		out="set";
 	return(out);
+PLANK_TIME=1.0E-43;
 
 def main(*argv):
 	echo(APP+LOADED);
+        
 	echo (is_defined("APP"));
 	echo (xrange(5));
 	echo (xrange(2,10));

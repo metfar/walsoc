@@ -183,20 +183,19 @@ def getkey():
 	return(key);
 
 def main(args):
-	gr_sz=8;
-	grilla=(gr_sz,gr_sz);
+	grilla=[64,16];#x,y
 	grid={};
-	row=rep(gr_sz);
+	row=rep(grilla[0]);#gr_sz);
 	def ch(txt=" "):
 		return(" " if txt==_SPACE else "X");
 
-	for f in range(gr_sz):
+	for f in range(grilla[1]):
 		grid[f]=row;
 
 	x,y=0,0;
 	goOut=False;
 	key="";
-	sx,sy=10,10;
+	sx,sy=2,2;
 	while(not goOut):
 		color(7,0);
 		clrscr();
@@ -204,7 +203,7 @@ def main(args):
 		for f in range(len(grid)):
 			for n in range(len(grid[f])):
 				#color(7,0);
-				#locate(f*2+sy,n*2+sx);
+				#gotoxy(f*2+sy,n*2+sx);
 				#print("+-+",end="");
 				c=ch(grid[f][n]);
 				if(c=="X"):
@@ -212,16 +211,16 @@ def main(args):
 				else:
 					color(3,0);
 					c=".";
-				locate(f+1+sy,n*2+sx);
+				gotoxy(n*2+sx,f+1+sy);
 				print(c*2,end="");
 				#color(7,0);
 				#print("|",end="");
 		#for f in range(len(grid[0])):
-		#	locate(len(grid)*2+sy,f*2+sx);
+		#	gotoxy(len(grid)*2+sy,f*2+sx);
 		#	print("+-+",end="");
 		
 
-		locate(y+1+sy,x*2+sx);
+		gotoxy(x*2+sx,y+1+sy);
 		c=ch(grid[y][x]);
 		if(c=="X"):
 			#color(3,6);
@@ -231,25 +230,25 @@ def main(args):
 			color(3,5);
 		print(c*2,end="");
 		
-		locate(gr_sz*2+2+sx,gr_sz*2+2+sy);
+		gotoxy(grilla[0]*2+2+sx, grilla[1]*2+2+sy);
 		print("("+str(x)+","+str(y)+"):"+str(key));
 		color(7,0);
 		key=getkey();
 		
-		locate(3,3); print(key);
+		gotoxy(3,21); print(key);
 		if(key==ESCAPE or key=="q"):
 			goOut=True;
 			Exit();
 			"""
 			if(ord(key)==0xe0):
-				locate (1,1); print("Cero");
+				gotoxy (1,1); print("Cero");
 				key=getch();
 			"""
-		if(key==RIGHT_ARROW and x<gr_sz-1):
+		if(key==RIGHT_ARROW and x<grilla[0]-1):
 			x+=1;
 		if(key==LEFT_ARROW and x>0):
 			x-=1;
-		if(key==DOWN_ARROW and y<gr_sz-1):
+		if(key==DOWN_ARROW and y<grilla[1]-1):
 			y+=1;
 		if(key==UP_ARROW and y>0):
 			y-=1;
@@ -265,7 +264,7 @@ def main(args):
 				arch = open(a+".udg", 'wb');
 				pickle.dump(grid, arch);
 				arch.close();
-				locate(21,1);
+				gotoxy(1,21);
 				print("Saved to file "+a+"!");
 			except:
 				print("The graphic could not be saved as "+a+".udg!");
@@ -283,7 +282,7 @@ def main(args):
 				arch = open(a+".udg", 'rb');
 				grid=pickle.load( arch);
 				arch.close();
-				locate(21,1);
+				gotoxy(1,21);
 				print("File "+a+" loaded!");
 			except:
 				print("The file "+a+".udg could not be loaded!");

@@ -21,7 +21,8 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #  
-#  
+#  This is part of WalSoc Project < https://github.com/metfar/walsoc/tree/master/walsoc/pa >
+  
 
 import sys;
 from os import getpid,path;

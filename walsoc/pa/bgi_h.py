@@ -225,7 +225,7 @@ class FlagReg:
 	
 	#set
 	def setSF(self):#SIGN
-		self._FLAG = (self._FLAG | 128;
+		self._FLAG = (self._FLAG | 128);
 	
 	def setZF(self):#ZERO
 		self._FLAG = (self._FLAG |  64);
@@ -251,7 +251,7 @@ class FlagReg:
 	#reset
 	#set
 	def resetSF(self):#SIGN
-		self._FLAG = (self._FLAG ^ 128;
+		self._FLAG = (self._FLAG ^ 128);
 	
 	def resetZF(self):#ZERO
 		self._FLAG = (self._FLAG ^  64);

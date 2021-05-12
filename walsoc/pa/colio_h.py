@@ -183,7 +183,7 @@ def getkey():
 	return(key);
 
 def main(args):
-	grilla=[64,16];#x,y
+	grilla=[10,10];#x,y
 	grid={};
 	row=rep(grilla[0]);#gr_sz);
 	def ch(txt=" "):

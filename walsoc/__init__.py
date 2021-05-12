@@ -4,6 +4,7 @@
 import sys;
 import os;
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'pa')));
+sys.path.append(os.path.abspath(os.path.dirname(__file__)));
 for f in "asc,alias,string,enum,math,stdio,set".split(","):
         exec("from .pa."+f+"_h import *;");
 

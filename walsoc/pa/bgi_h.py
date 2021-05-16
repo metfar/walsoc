@@ -89,6 +89,7 @@ if sy>ny:
 	ny=sy;
 
 pygame.init();
+pygame.display.iconify();
 
 window = pygame.display.set_mode((nx,ny));
 

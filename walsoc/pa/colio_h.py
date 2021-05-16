@@ -48,8 +48,6 @@ def spc(n=1):
 	
 
 
-def clrscr():
-	print(ESC+"[2J",end="");
 
 
 def locate(y,x):
@@ -57,6 +55,11 @@ def locate(y,x):
 
 def gotoxy(x,y):
 	locate(y,x);
+
+def clrscr():
+        print(ESC+"[2J",end="");
+        locate(0,0);
+
 
 def _defineColours():
 	global PALETTE,COLNAMES,COLOURS;
@@ -289,7 +292,7 @@ def main(args):
 			getch();
 			
 
-
+EXIT=Exit;
 
 if __name__ == '__main__':
 	color(7,0);

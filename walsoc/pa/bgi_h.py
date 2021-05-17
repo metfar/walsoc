@@ -77,7 +77,7 @@ TABBG=(20,20,50);
 TABINK=(235,235,205);
 if not (isset("nx") or isset("ny")):
 	sx,sy=512,256;
-	nx,ny=640,480;
+	nx,ny=1,1;#640,480;
 
 if not (isset("sx") or isset("sy")):
 	sx,sy=512,256;
@@ -89,9 +89,11 @@ if sy>ny:
 	ny=sy;
 
 pygame.init();
-pygame.display.iconify();
+#pygame.display.iconify();
 
-window = pygame.display.set_mode((nx,ny));
+window = pygame.display.set_mode((nx,ny),pygame.NOFRAME);
+#window.iconify();
+pygame.display.iconify();
 
 def set_title(title=NULL):
 	if title==NULL:
@@ -423,3 +425,5 @@ def main(args):
 
 if __name__ == '__main__':
 	sys.exit(main(sys.argv));
+
+

@@ -1,7 +1,6 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
-#  all_h.py
+#!/usr/bin/js
+/*
+#  all_h.js
 #  
 #  Copyright 2020 William Martinez Bas <metfar@gmail.com>
 #  
@@ -32,3 +31,4 @@ def main(*argv):
 if __name__ == '__main__':
 	import sys
 	sys.exit(main(sys.argv))
+*/

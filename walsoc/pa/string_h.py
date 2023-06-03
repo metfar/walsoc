@@ -29,7 +29,6 @@ from alias_h import *;
 
 STRING_H=True;
 
-
 def array(*args, **kwargs):
     n=0;
     res=list();
@@ -37,7 +36,6 @@ def array(*args, **kwargs):
         res.append(a);
     return(res);
 
-#print is native for python
 
 def toUpper(string):
     a="";
@@ -74,7 +72,7 @@ def split(delimiter=" ",String="",limit=null):
              if(limit==-1):
                 return(_tmp[:]);
              else:
-                return(_tmp[:limit+1]);
+                (limit+1)
         
     except:
           pass;

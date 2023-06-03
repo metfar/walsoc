@@ -13,6 +13,141 @@ Write source code in any language on a common basis, php-like.
 - Java implementation
 - Proper documentation
 
+## Install
+
+  python3 setup.py install
+
+## Uninstall
+
+  pip uninstall walsoc
+
+## Functions' list
+		Exit
+		acos
+		acosh
+		aGrossoModo
+		allTrim
+		asc
+		ascToIntl
+		asin
+		asinh
+		atan
+		atan2
+		atanh
+		basename
+		bin2dec
+		ceil
+		chdir
+		chr
+		col
+		cos
+		cosh
+		count
+		decToBin
+		decToBList
+		decToHex
+		Dict
+		dirExists
+		dirname
+		discard
+		div
+		echo
+		exists
+		exp
+		explode
+		fabs
+		fclose
+		fileExists
+		file_get_contents
+		floor
+		fmod
+		fopen
+		fprintf
+		fread
+		getContent
+		hexToBList
+		hexToDec
+		implode
+		inkey
+		instr
+		is_defined
+		isDict
+		isEmpty
+		isFloat
+		isIn
+		isInteger
+		isIterable
+		isList
+		isNumeric
+		isString
+		join
+		lastKey
+		left
+		len
+		linkExists
+		List
+		ln
+		log
+		ls
+		lTrim
+		mkdir
+		newKey
+		ob_clean
+		ob_end
+		ob_end_clean
+		ob_get_clean
+		ob_get_contents
+		ob_start
+		oct2dec
+		pal
+		pop
+		popFirst
+		popLast
+		pow
+		printf
+		printR
+		procStr
+		pushFirst
+		pushLast
+		readKey
+		readlink
+		remove
+		rev
+		reverse
+		right
+		rmdir
+		rTrim
+		set
+		sin
+		sinh
+		split
+		sprintf
+		sqrt
+		strtok
+		substi
+		substr
+		tan
+		tanh
+		toArray
+		toCaps
+		toDeg
+		toFloat
+		toInt
+		toList
+		toLower
+		toRad
+		toTitle
+		touch
+		toUpper
+		tr
+		tr_d
+		typeOf
+		union
+		update
+		version
+		xraise
+		xrange
+
 
 ## License
 
@@ -32,13 +167,12 @@ Write source code in any language on a common basis, php-like.
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
   MA 02110-1301, USA.
-  Proposal: Make a local backup scheme using rsync. You can try to compress it and schedule it using crontab. 
-
+  
 ## Repository
 
   - Full project <https://github.com/metfar/walsoc>
-  - Explorable Python tree <https://github.com/metfar/walsoc/tree/master/pa>
-  - Surfable Ruby tree <https://github.com/metfar/walsoc/tree/master/ra>
+  - Explorable Python tree <https://github.com/metfar/walsoc/tree/master/walsoc/pa>
+  - Surfable Ruby tree <https://github.com/metfar/walsoc/tree/master/walsoc/ra>
 
 ## Get (or keep) in touch
 

@@ -9,7 +9,8 @@ Write source code in any language on a common basis, php-like.
 
 ## Coming soon to all theatres
 
-- JavaScript implementation
+- PHP implementation
+- Java implementation
 - Proper documentation
 
 ## Install

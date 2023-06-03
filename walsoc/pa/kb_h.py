@@ -32,7 +32,6 @@ except:
 	import sys,termios,atexit;
 	from select import select;
 
-
 import threading; #generate thread
 import time, traceback;#manage time events;
 
@@ -119,7 +118,7 @@ class KBHit:
 		if (OS == 'x'):
 			termios.tcsetattr(self.fd, termios.TCSAFLUSH, self.old_term);
 		FinishIT=True;
-		sys.exit(0);
+		#sys.exit(0);
 
 
 	def getch(self):

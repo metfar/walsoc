@@ -2,26 +2,26 @@
 # -*- coding: utf-8 -*-
 #
 #  bgi_h.py
-#  
+#
 #  Copyright 2021 William Martinez Bas <metfar@gmail.com>
-#  
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or
 #  (at your option) any later version.
-#  
+#
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#  
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
-#  
+#
 #  This is part of WalSoc Project < https://github.com/metfar/walsoc/tree/master/walsoc/pa >
-  
+
 
 import sys;
 import shlex;
@@ -64,10 +64,11 @@ for f in range(0,24):
     mem=(_B**f);
     val=(_B**f)*_K;
     exec("M"+str(mem)+"K="+str(val));
-    
+
 _PC=1;
 _LIMMEM=M64K;
 _SCR=M16K;
+DWMax=float(2**32);
 """
 for f in locals():
     if "M" in f.upper():
@@ -130,7 +131,7 @@ def invert(x,top=255):
         for f in INK:
             out.append(top ^ f);
     return(out);
-    
+
 
 def color(num):
     if(type(num)==type(1)):
@@ -155,35 +156,35 @@ class Clk:
     def __init__(self):
         self._status=0;
         self._values=[-(self._lim/2),0,(self._lim/2),0];
-    
+
     def __next__(self):
         self._status=(self._status+1)%len(self._states);
         return(self._status);
     def __prior__(self):
         self._status=(self._status-1)%len(self._states);
         return(self._status);
-    
+
     def __last__(self):
         return((self._status-1)%len(self._states));
     def __following__(self):
         return((self._status+1)%len(self._states));
-    
+
     def status(self):
         return(self._status);
-    
+
     def text_status(self):
         return(self._states[self._status]);
-    
+
     def value(self):
         delta=self.__next__()-self.__last__();
         return(self._values[self._status]+NOISE_RR[NOISE_IX]);
-    
+
     def tick(self):
         self._time+=1;
         if(self._time>self._lim):
             self._time=0;
             self.__next__();
-        
+
         self._IX=(self._IX+1)%RR_LENGTH;
         self._RR[self._IX]=self.value();
 
@@ -196,146 +197,146 @@ CLK=Clk();
 
 class FlagReg:
     def __init__(self):
-        
+
         self._FLAG=0;
-    
+
     #get
     def getSF(self):#SIGN
         return(0<(self._FLAG & 128));
-    
+
     def getZF(self):#ZERO
         return(0<(self._FLAG &  64));
-    
+
     def getEF(self):#ERROR
         return(0<(self._FLAG &  32));
-    
+
     def getHF(self):#HALF_CARRY
         return(0<(self._FLAG &  16));
-    
+
     def getWF(self):#WARNING
         return(0<(self._FLAG &   8));
-    
+
     def getOF(self):#PARITY_OVERFLOW
         return(0<(self._FLAG &   4));
-    
+
     def getAF(self):#ADD_SUBTRACT
         return(0<(self._FLAG &   2));
-    
+
     def getCF(self):#CARRY
         return(0<(self._FLAG &   1));
-    
+
     #set
     def setSF(self):#SIGN
         self._FLAG = (self._FLAG | 128);
-    
+
     def setZF(self):#ZERO
         self._FLAG = (self._FLAG |  64);
-    
+
     def setEF(self):#ERROR
         self._FLAG = (self._FLAG |  32);
-    
+
     def setHF(self):#HALF_CARRY
         self._FLAG = (self._FLAG |  16);
-    
+
     def setWF(self):#WARNING
         self._FLAG = (self._FLAG |   8);
-    
+
     def setOF(self):#PARITY_OVERFLOW
         self._FLAG = (self._FLAG |   4);
-    
+
     def setAF(self):#ADD_SUBTRACT
         self._FLAG = (self._FLAG |   2);
-    
+
     def setCF(self):#CARRY
         self._FLAG = (self._FLAG |   1);
-    
+
     #reset
     #set
     def resetSF(self):#SIGN
         self._FLAG = (self._FLAG ^ 128);
-    
+
     def resetZF(self):#ZERO
         self._FLAG = (self._FLAG ^  64);
-    
+
     def resetEF(self):#ERROR
         self._FLAG = (self._FLAG ^  32);
-    
+
     def resetHF(self):#HALF_CARRY
         self._FLAG = (self._FLAG ^  16);
-    
+
     def resetWF(self):#WARNING
         self._FLAG = (self._FLAG ^   8);
-    
+
     def resetOF(self):#PARITY_OVERFLOW
         self._FLAG = (self._FLAG ^   4);
-    
+
     def resetAF(self):#ADD_SUBTRACT
         self._FLAG = (self._FLAG ^   2);
-    
+
     def resetCF(self):#CARRY
         self._FLAG = (self._FLAG ^   1);
-    
+
     #toggle
     def toggleSF(self):#SIGN
         if(self.getSF()):
             self.resetSF();
         else:
             self.setSF();
-        
+
     def toggleZF(self):#ZERO
         if(self.getZF()):
             self.resetZF();
         else:
             self.setZF();
-        
+
     def toggleEF(self):#ERROR
         if(self.getEF()):
             self.resetEF();
         else:
             self.setEF();
-        
+
     def toggleHF(self):#HALF_CARRY
         if(self.getHF()):
             self.resetHF();
         else:
             self.setHF();
-        
+
     def toggleWF(self):#WARNING
         if(self.getWF()):
             self.resetWF();
         else:
             self.setWF();
-        
+
     def toggleOF(self):#PARITY_OVERFLOW
         if(self.getOF()):
             self.resetOF();
         else:
             self.setOF();
-        
+
     def toggleAF(self):#ADD_SUBTRACT
         if(self.getAF()):
             self.resetAF();
         else:
             self.setAF();
-        
+
     def toggleCF(self):#CARRY
         if(self.getCF()):
             self.resetCF();
         else:
             self.setCF();
-    
+
     def set(self,value=255):
         try:
             self._FLAG=value;
         except:
             pass;
-    
+
     def reset(self):
         self.set(0);
-    
+
     def get(Self):
         return(self._FLAG);
-    
+
     def __repr__(self):
         return(("%8s" % bin(127)[2:]).replace(" ","0"));
 
@@ -349,7 +350,7 @@ def plot(surf,pos,colour=NULL):
         rpos.append(int(f));
     pixel.fill(colour);
     surf.blit(pixel,rpos);
-    #pygame.draw.rect(surf,colour,[rpos,(1,1)],2); 
+    #pygame.draw.rect(surf,colour,[rpos,(1,1)],2);
 
 def rectangle(surf,start,end,colour,width=1):
     END=[abs(end[0]-start[0]),abs(end[1]-start[1])];
@@ -361,7 +362,7 @@ def line(surf,start,end,colour,width=1):
 def box(surf,start,end,colour):
     END=(abs(end[0]-start[0]),abs(end[1]-start[1]));
     pygame.draw.rect(surf,colour,[start,END],0);
-    
+
 def cfa(surf, pos, radio, colour, width=1):
     pygame.draw.circle(surf, colour, pos, radio, width);
 
@@ -389,19 +390,19 @@ def gprintf(*vargs):
     except:
         pass;
 
-DWMax=float(2**32);
+
 def abs(x):
     try:
         return(-x if x<0 else x);
     except:
         return(0);
-    
+
 def rnd(minim=-32,maxim=32,precision=.0001):
     delta=abs(maxim-minim)/precision;
     n=int(random()*delta)*precision+minim;
     return(n);
 
-    
+
 
 col=0;
 HZ=50.0;
@@ -421,13 +422,16 @@ def main(args):
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
-                exit(0);
+                return(0);
         window.lock();
         for x in range(10):
             rectangle(window,(randint(0,sx),randint(0,sy)),(randint(0,sx),randint(0,sy)),randint(0,16777215));
         window.unlock();
         pygame.display.update();
+
     return(0);
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv));
+
+

@@ -91,7 +91,7 @@ if sy>ny:
 
 pygame.init();
 
-window = pygame.display.set_mode((nx,ny));
+window = pygame.display.set_mode((nx,ny),flags=pygame.HIDDEN);
 
 def set_title(title=NULL):
     if title==NULL:
@@ -195,151 +195,6 @@ class Clk:
 
 CLK=Clk();
 
-class FlagReg:
-    def __init__(self):
-
-        self._FLAG=0;
-
-    #get
-    def getSF(self):#SIGN
-        return(0<(self._FLAG & 128));
-
-    def getZF(self):#ZERO
-        return(0<(self._FLAG &  64));
-
-    def getEF(self):#ERROR
-        return(0<(self._FLAG &  32));
-
-    def getHF(self):#HALF_CARRY
-        return(0<(self._FLAG &  16));
-
-    def getWF(self):#WARNING
-        return(0<(self._FLAG &   8));
-
-    def getOF(self):#PARITY_OVERFLOW
-        return(0<(self._FLAG &   4));
-
-    def getAF(self):#ADD_SUBTRACT
-        return(0<(self._FLAG &   2));
-
-    def getCF(self):#CARRY
-        return(0<(self._FLAG &   1));
-
-    #set
-    def setSF(self):#SIGN
-        self._FLAG = (self._FLAG | 128);
-
-    def setZF(self):#ZERO
-        self._FLAG = (self._FLAG |  64);
-
-    def setEF(self):#ERROR
-        self._FLAG = (self._FLAG |  32);
-
-    def setHF(self):#HALF_CARRY
-        self._FLAG = (self._FLAG |  16);
-
-    def setWF(self):#WARNING
-        self._FLAG = (self._FLAG |   8);
-
-    def setOF(self):#PARITY_OVERFLOW
-        self._FLAG = (self._FLAG |   4);
-
-    def setAF(self):#ADD_SUBTRACT
-        self._FLAG = (self._FLAG |   2);
-
-    def setCF(self):#CARRY
-        self._FLAG = (self._FLAG |   1);
-
-    #reset
-    #set
-    def resetSF(self):#SIGN
-        self._FLAG = (self._FLAG ^ 128);
-
-    def resetZF(self):#ZERO
-        self._FLAG = (self._FLAG ^  64);
-
-    def resetEF(self):#ERROR
-        self._FLAG = (self._FLAG ^  32);
-
-    def resetHF(self):#HALF_CARRY
-        self._FLAG = (self._FLAG ^  16);
-
-    def resetWF(self):#WARNING
-        self._FLAG = (self._FLAG ^   8);
-
-    def resetOF(self):#PARITY_OVERFLOW
-        self._FLAG = (self._FLAG ^   4);
-
-    def resetAF(self):#ADD_SUBTRACT
-        self._FLAG = (self._FLAG ^   2);
-
-    def resetCF(self):#CARRY
-        self._FLAG = (self._FLAG ^   1);
-
-    #toggle
-    def toggleSF(self):#SIGN
-        if(self.getSF()):
-            self.resetSF();
-        else:
-            self.setSF();
-
-    def toggleZF(self):#ZERO
-        if(self.getZF()):
-            self.resetZF();
-        else:
-            self.setZF();
-
-    def toggleEF(self):#ERROR
-        if(self.getEF()):
-            self.resetEF();
-        else:
-            self.setEF();
-
-    def toggleHF(self):#HALF_CARRY
-        if(self.getHF()):
-            self.resetHF();
-        else:
-            self.setHF();
-
-    def toggleWF(self):#WARNING
-        if(self.getWF()):
-            self.resetWF();
-        else:
-            self.setWF();
-
-    def toggleOF(self):#PARITY_OVERFLOW
-        if(self.getOF()):
-            self.resetOF();
-        else:
-            self.setOF();
-
-    def toggleAF(self):#ADD_SUBTRACT
-        if(self.getAF()):
-            self.resetAF();
-        else:
-            self.setAF();
-
-    def toggleCF(self):#CARRY
-        if(self.getCF()):
-            self.resetCF();
-        else:
-            self.setCF();
-
-    def set(self,value=255):
-        try:
-            self._FLAG=value;
-        except:
-            pass;
-
-    def reset(self):
-        self.set(0);
-
-    def get(Self):
-        return(self._FLAG);
-
-    def __repr__(self):
-        return(("%8s" % bin(127)[2:]).replace(" ","0"));
-
 
 def plot(surf,pos,colour=NULL):
     global pixel;
@@ -417,6 +272,7 @@ start_ticks=pygame.time.get_ticks();
 tick=0;
 
 def main(args):
+    window = pygame.display.set_mode((nx,ny), flags=pygame.SHOWN);
     set_title("BGI_H");
     set_icon("icon.png");
     while True:

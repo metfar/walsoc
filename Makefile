@@ -1,5 +1,5 @@
 init:
-	pip install -r requirements.txt
+	pip install --break-system-packages -r requirements.txt
 
 test:
-	nosetests tests
+	nosetests --rednose tests

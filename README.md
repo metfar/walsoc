@@ -7,10 +7,10 @@ Write source code in any language on a common basis, php-like.
 - Python
 - Ruby
 
-## Coming soon to all theatres
+## Wishlist
 
-- PHP implementation
-- Java implementation
+- Dart implementation
+- JavaScript implementation
 - Proper documentation
 
 ## Install
